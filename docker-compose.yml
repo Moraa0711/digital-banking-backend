@@ -1,0 +1,10 @@
+services:
+  backend:
+    build: .
+    image: banco-digital-backend:latest
+    container_name: banco-backend
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    restart: unless-stopped
