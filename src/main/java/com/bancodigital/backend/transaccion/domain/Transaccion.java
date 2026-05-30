@@ -15,11 +15,12 @@ import java.time.LocalDateTime;
 public class Transaccion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_transaccion")
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo", nullable = false)
-    private TipoTransaccion tipo;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_tipo_transaccion", nullable = false)
+    private TipoTransaccionEntity tipoTransaccion;
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal monto;
@@ -43,5 +44,12 @@ public class Transaccion {
         if (fecha == null) {
             fecha = LocalDateTime.now();
         }
+    }
+
+    public TipoTransaccion getTipo() {
+        if (tipoTransaccion == null || tipoTransaccion.getNombre() == null) {
+            throw new IllegalStateException("La transaccion no tiene tipo asociado");
+        }
+        return TipoTransaccion.fromNombre(tipoTransaccion.getNombre());
     }
 }

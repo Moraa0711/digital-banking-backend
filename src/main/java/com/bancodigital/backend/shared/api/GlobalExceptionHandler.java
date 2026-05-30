@@ -1,6 +1,7 @@
 package com.bancodigital.backend.shared.api;
 
 import com.bancodigital.backend.shared.exception.BusinessException;
+import com.bancodigital.backend.shared.exception.ForbiddenException;
 import com.bancodigital.backend.shared.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataAccessException;
@@ -27,6 +28,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiError> handleBusiness(BusinessException ex, HttpServletRequest request) {
         return buildError(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiError> handleForbidden(ForbiddenException ex, HttpServletRequest request) {
+        return buildError(HttpStatus.FORBIDDEN, ex.getMessage(), request);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

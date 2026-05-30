@@ -25,7 +25,7 @@ public class CuentaController {
     @GetMapping("/{numeroCuenta}/saldo")
     @Operation(summary = "HU-4 Consultar saldo")
     public SaldoResponse saldo(@PathVariable String numeroCuenta) {
-        Cuenta cuenta = cuentaService.buscarPorNumero(numeroCuenta);
+        Cuenta cuenta = cuentaService.consultarSaldo(numeroCuenta);
         return new SaldoResponse(cuenta.getNumeroCuenta(), cuenta.getSaldo());
     }
 

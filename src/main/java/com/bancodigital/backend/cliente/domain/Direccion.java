@@ -11,6 +11,7 @@ import lombok.Setter;
 public class Direccion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_direccion")
     private Long id;
 
     @Column(nullable = false)

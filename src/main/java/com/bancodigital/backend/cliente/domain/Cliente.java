@@ -14,6 +14,7 @@ import java.time.OffsetDateTime;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cliente")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -23,7 +24,7 @@ public class Cliente {
     @Column(name = "numero_documento", nullable = false, unique = true)
     private String numeroDocumento;
 
-    @Column(nullable = false)
+    @Column(name = "nombre_cliente", nullable = false)
     private String nombre;
 
     @Column(nullable = false)

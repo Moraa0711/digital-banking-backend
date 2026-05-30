@@ -4,6 +4,7 @@ import com.bancodigital.backend.cliente.domain.Cliente;
 import com.bancodigital.backend.cliente.infrastructure.ClienteRepository;
 import com.bancodigital.backend.cuenta.api.CrearCuentaRequest;
 import com.bancodigital.backend.cuenta.domain.Cuenta;
+import com.bancodigital.backend.cuenta.domain.EstadoCuenta;
 import com.bancodigital.backend.cuenta.domain.TipoCuentaEntity;
 import com.bancodigital.backend.cuenta.infrastructure.CuentaRepository;
 import com.bancodigital.backend.cuenta.infrastructure.TipoCuentaRepository;
@@ -26,6 +27,8 @@ public class CuentaService {
     public Cuenta crear(CrearCuentaRequest request) {
         Cliente cliente = clienteRepository.findById(request.clienteId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado: " + request.clienteId()));
+
+        validarClienteActivo(cliente);
 
         TipoCuentaEntity tipoCuenta = tipoCuentaRepository.findById(request.tipoCuenta())
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -51,6 +54,28 @@ public class CuentaService {
     public Cuenta buscarPorNumero(String numeroCuenta) {
         return cuentaRepository.findByNumeroCuenta(numeroCuenta)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada: " + numeroCuenta));
+    }
+
+    public Cuenta consultarSaldo(String numeroCuenta) {
+        Cuenta cuenta = buscarPorNumero(numeroCuenta);
+        validarEstadoActivo(cuenta, "La cuenta no se encuentra activa");
+        return cuenta;
+    }
+
+    public void validarCuentaParaMovimientos(Cuenta cuenta) {
+        validarEstadoActivo(cuenta, "La cuenta no esta activa para recibir movimientos");
+    }
+
+    private void validarEstadoActivo(Cuenta cuenta, String mensaje) {
+        if (cuenta == null || cuenta.getEstado() != EstadoCuenta.ACTIVA) {
+            throw new BusinessException(mensaje);
+        }
+    }
+
+    private void validarClienteActivo(Cliente cliente) {
+        if (cliente.getEstadoCuenta() == null || !cliente.getEstadoCuenta()) {
+            throw new BusinessException("El cliente debe estar activo para abrir una cuenta");
+        }
     }
 
     private String generarNumeroCuenta() {

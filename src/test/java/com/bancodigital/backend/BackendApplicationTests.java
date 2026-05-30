@@ -10,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 		"spring.datasource.password=",
 		"spring.flyway.enabled=false",
 		"spring.jpa.hibernate.ddl-auto=create-drop",
-		"spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect"
+		"spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect",
+		"spring.jpa.defer-datasource-initialization=true",
+		"spring.sql.init.mode=always"
 })
 class BackendApplicationTests {
 

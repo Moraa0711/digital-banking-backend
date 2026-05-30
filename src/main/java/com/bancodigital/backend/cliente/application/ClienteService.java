@@ -39,6 +39,12 @@ public class ClienteService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado: " + id));
     }
 
+    public Cliente buscarPorNumeroDocumento(String numeroDocumento) {
+        return clienteRepository.findByNumeroDocumento(numeroDocumento)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Cliente no encontrado con documento: " + numeroDocumento));
+    }
+
     private Integer calcularEdad(LocalDate fechaNacimiento) {
         return Period.between(fechaNacimiento, LocalDate.now()).getYears();
     }

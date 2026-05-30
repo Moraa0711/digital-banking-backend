@@ -15,6 +15,7 @@ import java.time.OffsetDateTime;
 public class Cuenta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cuenta")
     private Long id;
 
     @Column(name = "numero_cuenta", nullable = false, unique = true)
@@ -27,7 +28,6 @@ public class Cuenta {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal saldo;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstadoCuenta estado;
 

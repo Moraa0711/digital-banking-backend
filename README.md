@@ -1,6 +1,6 @@
-# Sistema de Banco Digital - Backend (Sprint 1 y 2)
+# Sistema de Banco Digital - Backend (Sprint 1, 2 y 3)
 
-Backend en Spring Boot para cubrir HU 1 a HU 6 del proyecto de banco digital, usando PostgreSQL en Neon.
+Backend en Spring Boot para cubrir HU 1 a HU 8 del proyecto de banco digital, usando PostgreSQL en Neon.
 
 ## Arquitectura
 
@@ -8,17 +8,20 @@ Se organizo en modulos por dominio para facilitar evolucion a microservicios:
 
 - `cliente` (HU-1, HU-2)
 - `cuenta` (HU-3, HU-4)
-- `transaccion` (HU-5, HU-6)
+- `transaccion` (HU-5 a HU-8)
 - `shared` (manejo de errores y respuestas comunes)
 
-## Endpoints principales
+## Endpoints principales (versionados)
 
-- `POST /api/clientes` -> HU-1 Registrar cliente
-- `GET /api/clientes/{id}` -> HU-2 Consultar cliente
-- `POST /api/cuentas` -> HU-3 Crear cuenta bancaria
-- `GET /api/cuentas/{numeroCuenta}/saldo` -> HU-4 Consultar saldo
-- `POST /api/transacciones/transferencias` -> HU-5 Transferir dinero
-- `POST /api/transacciones/depositos` -> HU-6 Depositar dinero
+- `POST /api/v2/clientes` -> HU-1 Registrar cliente
+- `GET /api/v2/clientes/{id}` -> HU-2 Consultar cliente por id
+- `GET /api/v3/clientes?documento={numero}` -> HU-2 Consultar cliente por numero de documento
+- `POST /api/v1/cuentas` -> HU-3 Crear cuenta bancaria
+- `GET /api/v1/cuentas/{numeroCuenta}/saldo` -> HU-4 Consultar saldo
+- `POST /api/v1/transacciones/transferencias` -> HU-5 Transferir dinero
+- `POST /api/v1/transacciones/depositos` -> HU-6 Depositar dinero
+- `POST /api/v1/transacciones/retiros` -> HU-7 Retirar dinero
+- `GET /api/v1/transacciones/historial` -> HU-8 Historial de transacciones
 
 ## Configuracion de Neon
 
